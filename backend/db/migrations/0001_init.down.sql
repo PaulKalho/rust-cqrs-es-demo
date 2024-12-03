@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS project_view;
+DROP TABLE IF EXISTS events;
+
+REVOKE ALL PRIVILEGES ON DATABASE postgres FROM postgres;

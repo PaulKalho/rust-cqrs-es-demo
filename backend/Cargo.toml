@@ -1,0 +1,18 @@
+[package]
+name = "ip-demo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cqrs-es = "0.4.12"
+async-trait = "0.1.83"
+serde = { version = "1.0.215", features = ["derive"]}
+tokio = { version = "1.41.1", features = ["full"]}
+postgres-es = "0.4.12"
+sqlx = { version = "0.8.2", features= [ "postgres", "runtime-tokio-rustls", "json" ] }
+axum = "0.7.9"
+
+[[bin]]
+name = "pauls_demo"
+path = "src/main.rs"
+
