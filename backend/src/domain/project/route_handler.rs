@@ -6,7 +6,9 @@ use axum::{
     response::{IntoResponse, Response},
     Json,
 };
+use chrono::{DateTime, Utc};
 use cqrs_es::persist::ViewRepository;
+use serde::Deserialize;
 
 pub async fn query_handler(
     Path(project_id): Path<String>,
@@ -25,16 +27,29 @@ pub async fn query_handler(
     }
 }
 
+#[derive(Deserialize)]
+pub struct CreateProjectDTO {
+    project_name: String,
+    project_start: DateTime<Utc>,
+    project_end: DateTime<Utc>,
+    participants_name: Vec<String>,
+}
+
 pub async fn command_handler(
-    Path(project_id): Path<String>,
     State(state): State<ApplicationState>,
+    Json(payload): Json<CreateProjectDTO>,
 ) -> Response {
+    let newly_created_uuid = uuid::Uuid::new_v4();
     match state
         .cqrs
         .execute(
-            &project_id,
+            &newly_created_uuid.to_string(),
             ProjectCommand::CreateProject {
-                project_id: (project_id.to_string()),
+                project_id: newly_created_uuid,
+                project_name: payload.project_name,
+                project_start: payload.project_start,
+                project_end: payload.project_end,
+                participants_name: payload.participants_name,
             },
         )
         .await

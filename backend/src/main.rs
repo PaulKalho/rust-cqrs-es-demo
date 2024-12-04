@@ -17,10 +17,7 @@ async fn main() {
         ]);
 
     let router = Router::new()
-        .route(
-            "/project/:project_id",
-            get(query_handler).post(command_handler),
-        )
+        .route("/project/", get(query_handler).post(command_handler))
         .with_state(state)
         .layer(cors);
 

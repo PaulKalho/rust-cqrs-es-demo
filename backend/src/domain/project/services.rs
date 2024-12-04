@@ -12,7 +12,7 @@ impl ProjectServices {
 
 #[async_trait]
 pub trait ProjectApi: Sync + Send {
-    async fn create_project(&self, project_id: &str) -> Result<(), CreateError>;
+    async fn create_project(&self, project_id: &uuid::Uuid) -> Result<(), CreateError>;
 }
 pub struct CreateError;
 
@@ -20,7 +20,7 @@ pub struct HappyPathProjectServices;
 
 #[async_trait]
 impl ProjectApi for HappyPathProjectServices {
-    async fn create_project(&self, project_id: &str) -> Result<(), CreateError> {
+    async fn create_project(&self, _project_id: &uuid::Uuid) -> Result<(), CreateError> {
         Ok(())
     }
 }

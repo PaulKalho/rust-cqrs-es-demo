@@ -1,10 +1,17 @@
+use chrono::{DateTime, Utc};
 use cqrs_es::DomainEvent;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub enum ProjectEvent {
-    ProjectCreated { project_id: String },
+    ProjectCreated {
+        project_id: uuid::Uuid,
+        project_name: String,
+        project_start: DateTime<Utc>,
+        project_end: DateTime<Utc>,
+        participants_name: Vec<String>,
+    },
 }
 
 impl DomainEvent for ProjectEvent {

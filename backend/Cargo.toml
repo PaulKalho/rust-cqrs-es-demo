@@ -9,9 +9,12 @@ async-trait = "0.1.83"
 serde = { version = "1.0.215", features = ["derive"]}
 tokio = { version = "1.41.1", features = ["full"]}
 postgres-es = "0.4.12"
-sqlx = { version = "0.8.2", features= [ "postgres", "runtime-tokio-rustls", "json" ] }
+sqlx = { version = "0.8.2", features = [ "postgres", "runtime-tokio-rustls", "json" ] }
 axum = "0.7.9"
-tower-http = { version = "0.6.2", features= ["cors"] }
+tower-http = { version = "0.6.2", features = ["cors"] }
+uuid = { version = "1.11.0", features = [ "v4", "serde" ] }
+chrono = { version = "0.4", features = ["serde"] }
+
 [[bin]]
 name = "pauls_demo"
 path = "src/main.rs"
