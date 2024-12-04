@@ -1,0 +1,49 @@
+name: CI
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  lint-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup nodejs
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm install
+
+      - name: Run linter
+        working-directory: ./frontend
+        run: npm run lint
+  
+  build-and-test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup rust
+        working-directory: ./backend
+        run: rustup update stable && rustup default stable
+
+      - name: Build
+        working-directory: ./backend
+        run: cargo build --verbose
+
+      - name: Test
+        working-directory: ./backend
+        run: cargo test --verbose
+
+
+### TODO: cd (build docker images & deploy)
