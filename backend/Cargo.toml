@@ -11,7 +11,7 @@ tokio = { version = "1.41.1", features = ["full"]}
 postgres-es = "0.4.12"
 sqlx = { version = "0.8.2", features= [ "postgres", "runtime-tokio-rustls", "json" ] }
 axum = "0.7.9"
-
+tower-http = { version = "0.6.2", features= ["cors"] }
 [[bin]]
 name = "pauls_demo"
 path = "src/main.rs"
