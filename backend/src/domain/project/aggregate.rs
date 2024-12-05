@@ -112,10 +112,10 @@ mod aggregate_tests {
             .given_no_previous_events()
             .when(ProjectCommand::CreateProject {
                 project_id: uuid,
-                project_name: "".to_string(),
-                project_start: Utc::now(),
-                project_end: Utc::now(),
-                participants_name: vec![],
+                project_name: "Test Name".to_string(),
+                project_start,
+                project_end,
+                participants_name: vec!["test participant".to_string(), "second".to_string()],
             })
             .then_expect_events(vec![expected]);
     }
