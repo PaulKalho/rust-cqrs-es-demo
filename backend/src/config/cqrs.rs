@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use crate::domain::project::{
     aggregate::Project,
-    queries::ProjectQuery,
+    queries::{AllProjectsQuery, ProjectQuery},
     services::{HappyPathProjectServices, ProjectServices},
     view::ProjectView,
 };
@@ -18,10 +18,12 @@ pub fn configure_cqrs(
 ) {
     let project_view_repo = Arc::new(PostgresViewRepository::new("project_view", pool.clone()));
     let mut project_query = ProjectQuery::new(project_view_repo.clone());
+    let all_projects_query = AllProjectsQuery::new(pool.clone(), "project_view".to_string());
 
     project_query.use_error_handler(Box::new(|e| println!("{}", e)));
 
-    let queries: Vec<Box<dyn Query<Project>>> = vec![Box::new(project_query)];
+    let queries: Vec<Box<dyn Query<Project>>> =
+        vec![Box::new(project_query), Box::new(all_projects_query)];
     let services = ProjectServices::new(Box::new(HappyPathProjectServices));
     (
         Arc::new(postgres_es::postgres_cqrs(pool, queries, services)),

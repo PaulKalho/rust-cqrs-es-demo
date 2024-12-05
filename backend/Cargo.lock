@@ -880,6 +880,7 @@ dependencies = [
  "cqrs-es",
  "postgres-es",
  "serde",
+ "serde_json",
  "sqlx",
  "tokio",
  "tower-http",
